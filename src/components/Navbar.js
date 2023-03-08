@@ -13,11 +13,61 @@ export class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="/">Home</a>
+                                    <a className="nav-link" aria-current="page" href="/">Home</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="/about">About</a>
                                 </li>
+
+                                <div className="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                                    <ul className="navbar-nav">
+                                        <li className="nav-item dropdown">
+                                            <a className="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Category
+                                            </a>
+                                            <ul className="dropdown-menu dropdown-menu-dark">
+                                                <li className="nav-item">
+                                                    <a className="nav-link" href="/business">business</a>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <a className="nav-link" href="/entertainment">entertainment</a>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <a className="nav-link" href="/general">general</a>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <a className="nav-link" href="/health">health</a>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <a className="nav-link" href="/sports">sports</a>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <a className="nav-link" href="/technology">technology</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/business">business</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/entertainment">entertainment</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/general">general</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/health">health</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/sports">sports</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/technology">technology</a>
+                                </li>
+
                             </ul>
                         </div>
                     </div>

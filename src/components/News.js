@@ -1,11 +1,26 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
 import Sppinner from './Sppinner';
+import PropTypes from 'prop-types';
 
 
 // props can't be change if we want too change props then we need to create a state over the props the we can change the state, so state can be change and props are can be read only.
 
 export class News extends Component {
+
+    // in class based components propsTypes and defaultProps are written by using static
+    static defaultProps = {
+        country: "in",
+        pageSize: 5,
+        category: "general"
+    }
+
+    static propTypes = {
+        country: PropTypes.string,
+        pageSize: PropTypes.number,
+        category: PropTypes.string,
+    }
+
 
     constructor() {
         super();
@@ -22,7 +37,7 @@ export class News extends Component {
     // async function can wait in his own function body to get resolve some promises
     async componentDidMount() {
         // this link is the page 1
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=2691ca327b3040bb9c679811844591fe&page=1&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=1&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })
         // here we are using fetch api, fetch api will take url as an argument and return a promise
         let data = await fetch(url);
@@ -54,7 +69,7 @@ export class News extends Component {
         if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize))) {
 
             // now this page will be updated by plus 1, and pageSize = this.props.pageSize means we want the page size which can be set in the App.js as we've set that as props
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
+            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
             // here loading : true, means here we are getting new articles are comming from the news api
             this.setState({ loading: true });
             // here we are using fetch api, fetch api will take url as an argument and return a promise
@@ -79,7 +94,7 @@ export class News extends Component {
     handlePreviousClick = async () => {
         console.log("prev")
         // now this page will be updated by minus 1
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
         // here we are using fetch api, fetch api will take url as an argument and return a promise
         this.setState({ loading: true })
         let data = await fetch(url);

@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <Navbar/>
-      <News pageSize={5} country={'us'}/>
+      <News pageSize={5} country={'us'} category="sports"/>
     </div>
   );
 }

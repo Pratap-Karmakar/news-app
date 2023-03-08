@@ -6,7 +6,7 @@ export class NewsItem extends Component {
         let {title, description, imageUrl, newsUrl}=this.props
         return (
             <div className='my-4'>
-                <div className="card" style={{width: "18rem"}}>
+                <div className="card" >
                     {/* if any news has no image to show then our app will show a default image to the user */}
                     <img src={!imageUrl?"https://media.istockphoto.com/id/1182477852/photo/breaking-news-world-news-with-map-backgorund.jpg?s=612x612&w=0&k=20&c=SQfmzF39HZJ_AqFGosVGKT9iGOdtS7ddhfj0EUl0Tkc=":imageUrl} className="card-img-top" alt="..." />
                     <div className="card-body">
