@@ -9,9 +9,9 @@ export class NewsItem extends Component {
                 <div className="card" >
 
                     {/* search : badge on bootstrap, to show the message at the top-right corner of every news card */}
-                    <span class="position-absolute top-0 translate-middle badge rounded-pill bg-danger" 
-                    // we've added this style to fix the badge on top-right corner of the news card
-                    style={{left: '90%', zIndex: '1'}}>{source}
+                    <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger"
+                        // we've added this style to fix the badge on top-right corner of the news card
+                        style={{ left: '90%', zIndex: '1' }}>{source}
                     </span>
 
                     {/* if any news has no image to show then our app will show a default image to the user */}
@@ -29,5 +29,6 @@ export class NewsItem extends Component {
         )
     }
 }
+
 
 export default NewsItem
