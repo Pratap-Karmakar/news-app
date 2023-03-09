@@ -22,8 +22,10 @@ export class News extends Component {
     }
 
 
-    constructor() {
-        super();
+    // as we are using props in (doocument.title= this.props.category) here that's why we need to take props here
+    constructor(props) {
+        // as we took props in the constructon that's why we need to take props in the super too
+        super(props);
         this.state = {
             // articles need a empty array to get stored
             articles: [],
@@ -31,6 +33,13 @@ export class News extends Component {
             // this will be the initial page
             page: 1
         }
+        // to change the title according to the news category and by using capitalizeFirsttLetter function we make the first letter of the title capital
+        document.title = `${this.capitalizeFirsttLetter(this.props.category)} - NewsMonkey`
+    }
+
+    // to capitalxize the first letter of a string
+    capitalizeFirsttLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     async updateNews() {
@@ -142,8 +151,9 @@ export class News extends Component {
 
         return (
             <div className='container my-3' >
-                <div className="border-bottom border-dark">
-                    <h2 className='text-center my-3'>NewsMonkey Top Headlines</h2>
+                <div className="border-bottom border-dark my-3">
+                    {/* (this.props.category) this will show the category of the news by using capitalizeFirsttLetter function we make the first letter of the title capital */}
+                    <h2 className='text-center my-3'>NewsMonkey - Top {this.capitalizeFirsttLetter(this.props.category)} Headlines</h2>
                 </div>
 
                 {/* this syntax means if loading (above line no:15) is true then only the spinner will be visible */}
@@ -163,15 +173,15 @@ export class News extends Component {
                             </div>
                         )
                     })}
-                    <div className="container d-flex justify-content-between border-top border-dark">
+                    <div className="container d-flex justify-content-between border-top border-dark my-5">
                         {/* &larr; will show the left arrow (search previous on google and you will get it) and same for &rarr; */}
                         {/* as we are using class based components thats why we need to use 
                         this.handlePreviousClick */}
                         {/* this.state.page<=1 means if the page cont is not more than 1 then the previous whitch will be disabled */}
-                        <button disabled={this.state.page <= 1} type="button" className="btn btn-dark my-3" onClick={this.handlePreviousClick}>&larr; Previous</button>
+                        <button disabled={this.state.page <= 1} type="button" className="btn btn-dark my-5" onClick={this.handlePreviousClick}>&larr; Previous</button>
 
                         {/* disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} means disabled the next button if this condition is true */}
-                        <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} type="button" className="btn btn-dark my-3" onClick={this.handleNextClick}>Next &rarr;</button>
+                        <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} type="button" className="btn btn-dark my-5" onClick={this.handleNextClick}>Next &rarr;</button>
 
                     </div>
 
