@@ -39,7 +39,7 @@ export class App extends Component {
 
   newsKeys={
     pageSize: 10,
-    country: 'us',
+    country: 'in',
   }
 
   render() {
@@ -50,8 +50,9 @@ export class App extends Component {
 
         <Route exact path='/about' element={<About />} />
 
-        {/* key="general" => only by this key the app will redirect me to that particular category of the news getting from the newsapi */}
+        {/* key="general" => only by this key the app will redirect me to that particular category of the news getting from the newsapi, without this keys the app will not work */}
         <Route path='/' element={<News key="general" pageSize={this.newsKeys.pageSize} country={this.newsKeys.country} category="general" />} />
+        {/* pageSize={this.newsKeys.pageSize} => here pageSize is the props which we've setted in the News.js page and this.newsKeys.pageSize => here we are calling the pageSize from the state newsKeys which we've created under the component function above in this page only*/}
         <Route exact path='/business' element={<News key="business" pageSize={this.newsKeys.pageSize} country={this.newsKeys.country} category="business" />} />
         <Route exact path='/science' element={<News key="science" pageSize={this.newsKeys.pageSize} country={this.newsKeys.country} category="science" />} />
         <Route exact path='/technology' element={<News key="technology" pageSize={this.newsKeys.pageSize} country={this.newsKeys.country} category="technology" />} />

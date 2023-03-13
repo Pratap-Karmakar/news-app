@@ -9,7 +9,7 @@ export class NewsItem extends Component {
                 <div className="card" >
 
                     {/* search : badge on bootstrap, to show the message at the top-right corner of every news card */}
-                    <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger"
+                    <span className="position-absolute top-0 translate-middle badge rounded-pill bg-info"
                         // we've added this style to fix the badge on top-right corner of the news card
                         style={{ left: '90%', zIndex: '1' }}>{source}
                     </span>
@@ -21,7 +21,7 @@ export class NewsItem extends Component {
                         <p className="card-text">{description}</p>
                         {/* target="_blank" will open the newsUrl in the new tab whenever we click on Read more */}
                         {/* {new Date(date).toGMTString()} => here first we create an onject named Date and the passed the {date} as an object item the change it to toGMTString() */}
-                        <p className='card-text'><small className='text-muted'>By {author} on {new Date(date).toGMTString()}</small></p>
+                        <p className='card-text'><small className='text-info'>By {author} on {new Date(date).toGMTString()}</small></p>
                         <a rel="noreferrer" href={newsUrl} target="_blank" className="btn btn-dark btn-sm">Read more</a>
                     </div>
                 </div>
