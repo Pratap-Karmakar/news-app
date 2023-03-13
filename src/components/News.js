@@ -43,29 +43,9 @@ export class News extends Component {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    // async updateNews() {
-    //     // this link is the page 1
-    //     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page}&pageSize=${this.props.pageSize}`
-    //     this.setState({ loading: true })
-    //     // here we are using fetch api, fetch api will take url as an argument and return a promise
-    //     let data = await fetch(url);
-    //     let parsedData = await data.json();
-    //     console.log(parsedData);
-    //     // it means we want to set the data of the state article by parsedData article means we want the parsed articles by the news api app in our articles
-    //     // and totalResults means the total number of the articles parsed by the news api app
-    //     this.setState({
-    //         articles: parsedData.articles,
-    //         totalResults: parsedData.totalResults,
-    //         loading: false
-    //     });
-    // }
-
-    // react lifecycle
-    // componentDidMount will run after the render function run
-    // async function can wait in his own function body to get resolve some promises
-    async componentDidMount() {
+    async updateNews() {
         // this link is the page 1
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=1&pageSize=${this.props.pageSize}`
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page}&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })
         // here we are using fetch api, fetch api will take url as an argument and return a promise
         let data = await fetch(url);
@@ -78,9 +58,29 @@ export class News extends Component {
             totalResults: parsedData.totalResults,
             loading: false
         });
+    }
+
+    // react lifecycle
+    // componentDidMount will run after the render function run
+    // async function can wait in his own function body to get resolve some promises
+    async componentDidMount() {
+        // this link is the page 1
+        // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=1&pageSize=${this.props.pageSize}`
+        // this.setState({ loading: true })
+        // // here we are using fetch api, fetch api will take url as an argument and return a promise
+        // let data = await fetch(url);
+        // let parsedData = await data.json();
+        // console.log(parsedData);
+        // // it means we want to set the data of the state article by parsedData article means we want the parsed articles by the news api app in our articles
+        // // and totalResults means the total number of the articles parsed by the news api app
+        // this.setState({
+        //     articles: parsedData.articles,
+        //     totalResults: parsedData.totalResults,
+        //     loading: false
+        // });
 
 
-        // this.updateNews();
+        this.updateNews();
     }
 
 
@@ -100,29 +100,29 @@ export class News extends Component {
 
         // code
 
-        if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize))) {
+        // if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize))) {
 
-            // now this page will be updated by plus 1, and pageSize = this.props.pageSize means we want the page size which can be set in the App.js as we've set that as props
-            let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
-            // here loading : true, means here we are getting new articles are comming from the news api
-            this.setState({ loading: true });
-            // here we are using fetch api, fetch api will take url as an argument and return a promise
-            let data = await fetch(url);
-            let parsedData = await data.json();
-            console.log(parsedData);
-            this.setState({ loading: false })
-            this.setState({
-                page: this.state.page + 1,
-                // it means we want to set the data of the stae article by parsedData article
-                articles: parsedData.articles,
-                // here loading : true, meas here we've recived the new articles from the news api
-                loading: false
-            })
-        }
+        //     // now this page will be updated by plus 1, and pageSize = this.props.pageSize means we want the page size which can be set in the App.js as we've set that as props
+        //     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
+        //     // here loading : true, means here we are getting new articles are comming from the news api
+        //     this.setState({ loading: true });
+        //     // here we are using fetch api, fetch api will take url as an argument and return a promise
+        //     let data = await fetch(url);
+        //     let parsedData = await data.json();
+        //     console.log(parsedData);
+        //     this.setState({ loading: false })
+        //     this.setState({
+        //         page: this.state.page + 1,
+        //         // it means we want to set the data of the stae article by parsedData article
+        //         articles: parsedData.articles,
+        //         // here loading : true, meas here we've recived the new articles from the news api
+        //         loading: false
+        //     })
+        // }
 
 
-        // this.setState({ page: this.state.page + 1 })
-        // this.updateNews();
+        this.setState({ page: this.state.page + 1 })
+        this.updateNews();
     }
 
 
@@ -131,21 +131,21 @@ export class News extends Component {
     handlePreviousClick = async () => {
         console.log("prev")
         // now this page will be updated by minus 1
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
-        // here we are using fetch api, fetch api will take url as an argument and return a promise
-        this.setState({ loading: true })
-        let data = await fetch(url);
-        let parsedData = await data.json();
-        console.log(parsedData);
-        this.setState({
-            page: this.state.page - 1,
-            // it means we want to set the data of the stae article by parsedData article
-            articles: parsedData.articles,
-            loading: false
-        })
+        // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
+        // // here we are using fetch api, fetch api will take url as an argument and return a promise
+        // this.setState({ loading: true })
+        // let data = await fetch(url);
+        // let parsedData = await data.json();
+        // console.log(parsedData);
+        // this.setState({
+        //     page: this.state.page - 1,
+        //     // it means we want to set the data of the stae article by parsedData article
+        //     articles: parsedData.articles,
+        //     loading: false
+        // })
 
-        // this.setState({ page: this.state.page - 1 })
-        // this.updateNews();
+        this.setState({ page: this.state.page - 1 })
+        this.updateNews();
     }
 
 
