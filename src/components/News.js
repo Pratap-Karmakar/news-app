@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
-import Sppinner from './Sppinner';
+import Sppinner from './Spinner';
 import PropTypes from 'prop-types';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 // props can't be change if we want too change props then we need to create a state over the props the we can change the state, so state can be change and props are can be read only.
@@ -30,9 +31,11 @@ export class News extends Component {
         this.state = {
             // articles need a empty array to get stored
             articles: [],
-            loading: false,
+            // we are setting loading as true to show the spinner while the page will loading new category at the top
+            loading: true,
             // this will be the initial page
-            page: 1
+            page: 1,
+            totalResults: 0
         }
         // to change the title according to the news category and by using capitalizeFirsttLetter function we make the first letter of the title capital
         document.title = `${this.capitalizeFirsttLetter(this.props.category)} - NewsMonkey`
@@ -148,54 +151,90 @@ export class News extends Component {
         this.updateNews();
     }
 
+    fetchMoreData = async () => {
+        // we need to set the page+1 otherwise 1st page of news will come twise in the app
+        this.setState({ page: this.state.page + 1 })
 
+        // page=${this.state.page +1} we need to set the page+1 otherwise 1st page of news will come twise in the app
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
+        // here we are using fetch api, fetch api will take url as an argument and return a promise
+        let data = await fetch(url);
+        let parsedData = await data.json();
+        console.log(parsedData);
+        // it means we want to set the data of the state article by parsedData article means we want the parsed articles by the news api app in our articles
+        // and totalResults means the total number of the articles parsed by the news api app
+        this.setState({
+            // we need to concat the parsedData articles with the state articles otherwise the new news will not appear
+            articles: this.state.articles.concat(parsedData.articles),
+            totalResults: parsedData.totalResults,
+
+        });
+    }
 
 
     render() {
         console.log('render')
 
         return (
-            
-            <div className='container my-3' >
+
+            <div>
                 <div className="border-bottom border-dark my-3">
                     {/* (this.props.category) this will show the category of the news by using capitalizeFirsttLetter function we make the first letter of the title capital */}
                     <h2 className='text-center my-3'>NewsMonkey - Top {this.capitalizeFirsttLetter(this.props.category)} Headlines</h2>
                 </div>
 
-                {/* this syntax means if loading (above line no:15) is true then only the spinner will be visible */}
+                {/* this syntax means if loading (above line no:15) is true then only the Spinner will be visible at the top to show the spinner while the page will loading new category*/}
                 {this.state.loading && <Sppinner />}
 
-                <div className="row">
-                    {/* !this.state.loading &&  means, if this.state.loading is false (means if loading:false) then only loading is visible and no content is visible */}
-                    {!this.state.loading && this.state.articles.map((element) => {
-                        return (
-                            // col-md-4 means it will take 4 columns in medium devices out of 12 grids given by bootstrap 
-                            // key={element.url} => here key use to load more about a particular news in the actual link thus we've setted the key where we have use element ehich is
-                            <div className="col-md-4" key={element.url} >
-                                {/* slice(0,44) means it will shoe the title from 0th character to the 44th character only and same goes for the description as well */}
-                                {/* !element.title means if not of element.title */}
-                                {/* <NewsItem title={element.title?element.title.slice(0, 44):""} description={element.description?element.description.slice(0, 80):""} imageUrl={element.urlToImage} newsUrl={element.url} /> */}
 
-                                <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author ? element.author : "Unknown"} date={element.publishedAt ? element.publishedAt : "Unknown"} source={element.source.name ? element.source.name : "Unknown"} />
-                            </div>
-                        )
-                    })}
-                    <div className="container d-flex justify-content-between border-top border-dark my-5">
-                        {/* &larr; will show the left arrow (search previous on google and you will get it) and same for &rarr; */}
-                        {/* as we are using class based components thats why we need to use 
-                        this.handlePreviousClick */}
-                        {/* this.state.page<=1 means if the page cont is not more than 1 then the previous whitch will be disabled */}
-                        <button disabled={this.state.page <= 1} type="button" className="btn btn-dark my-5" onClick={this.handlePreviousClick}>&larr; Previous</button>
+                <InfiniteScroll
+                    dataLength={this.state.articles.length}
+                    next={this.fetchMoreData}
+                    hasMore={this.state.articles.length !== this.state.totalResults}
+                    loader={<Sppinner />}
+                >
+                    <div className="container">
+                        <div className="row">
+                            {this.state.articles.map((element) => {
+                                return (
+                                    // col-md-4 means it will take 4 columns in medium devices out of 12 grids given by bootstrap 
+                                    // key={element.url} => here key use to load more about a particular news in the actual link thus we've setted the key where we have use element ehich is
+                                    <div className="col-md-4" key={element.url} >
+                                        {/* slice(0,44) means it will shoe the title from 0th character to the 44th character only and same goes for the description as well */}
+                                        {/* !element.title means if not of element.title */}
+                                        {/* <NewsItem title={element.title?element.title.slice(0, 44):""} description={element.description?element.description.slice(0, 80):""} imageUrl={element.urlToImage} newsUrl={element.url} /> */}
 
-                        {/* disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} means disabled the next button if this condition is true */}
-                        <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} type="button" className="btn btn-dark my-5" onClick={this.handleNextClick}>Next &rarr;</button>
-
+                                        <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author ? element.author : "Unknown"} date={element.publishedAt ? element.publishedAt : "Unknown"} source={element.source.name ? element.source.name : "Unknown"} />
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
+                </InfiniteScroll>
 
-                </div>
+
+
+                {/* button */}
+                {/* <div className="container d-flex justify-content-between border-top border-dark my-5"> */}
+                {/* &larr; will show the left arrow (search previous on google and you will get it) and same for &rarr; */}
+                {/* as we are using class based components thats why we need to use 
+                        this.handlePreviousClick */}
+                {/* this.state.page<=1 means if the page cont is not more than 1 then the previous whitch will be disabled */}
+                {/* <button disabled={this.state.page <= 1} type="button" className="btn btn-dark my-5" onClick={this.handlePreviousClick}>&larr; Previous</button> */}
+
+                {/* disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} means disabled the next button if this condition is true */}
+                {/* <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} type="button" className="btn btn-dark my-5" onClick={this.handleNextClick}>Next &rarr;</button> */}
+
+                {/* </div> */}
+
+
             </div>
         )
     }
 }
 
 export default News
+
+
+
+
