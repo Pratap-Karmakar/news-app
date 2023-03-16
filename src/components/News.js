@@ -51,7 +51,7 @@ export class News extends Component {
         // by setting this setProgress by 10 means the Loadingbar will visible 10% instantly the afte a moment it will go to 100%
         this.props.setProgress(20)
         // this link is the page 1
-        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page}&pageSize=${this.props.pageSize}`
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })
         // here we are using fetch api, fetch api will take url as an argument and return a promise
         let data = await fetch(url);
@@ -74,7 +74,7 @@ export class News extends Component {
     // async function can wait in his own function body to get resolve some promises
     async componentDidMount() {
         // this link is the page 1
-        // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=1&pageSize=${this.props.pageSize}`
+        // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=1&pageSize=${this.props.pageSize}`
         // this.setState({ loading: true })
         // // here we are using fetch api, fetch api will take url as an argument and return a promise
         // let data = await fetch(url);
@@ -112,7 +112,7 @@ export class News extends Component {
         // if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize))) {
 
         //     // now this page will be updated by plus 1, and pageSize = this.props.pageSize means we want the page size which can be set in the App.js as we've set that as props
-        //     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
+        //     let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
         //     // here loading : true, means here we are getting new articles are comming from the news api
         //     this.setState({ loading: true });
         //     // here we are using fetch api, fetch api will take url as an argument and return a promise
@@ -140,7 +140,7 @@ export class News extends Component {
     handlePreviousClick = async () => {
         console.log("prev")
         // now this page will be updated by minus 1
-        // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
+        // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
         // // here we are using fetch api, fetch api will take url as an argument and return a promise
         // this.setState({ loading: true })
         // let data = await fetch(url);
@@ -162,7 +162,7 @@ export class News extends Component {
         this.setState({ page: this.state.page + 1 })
 
         // page=${this.state.page +1} we need to set the page+1 otherwise 1st page of news will come twise in the app
-        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
         // here we are using fetch api, fetch api will take url as an argument and return a promise
         let data = await fetch(url);
         let parsedData = await data.json();
@@ -240,7 +240,4 @@ export class News extends Component {
 }
 
 export default News
-
-
-
 
