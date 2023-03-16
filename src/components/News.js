@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
+
 // props can't be change if we want too change props then we need to create a state over the props the we can change the state, so state can be change and props are can be read only.
 
 export class News extends Component {
@@ -47,11 +48,14 @@ export class News extends Component {
     }
 
     async updateNews() {
+        // by setting this setProgress by 10 means the Loadingbar will visible 10% instantly the afte a moment it will go to 100%
+        this.props.setProgress(20)
         // this link is the page 1
         const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=2691ca327b3040bb9c679811844591fe&page=${this.state.page}&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })
         // here we are using fetch api, fetch api will take url as an argument and return a promise
         let data = await fetch(url);
+
         let parsedData = await data.json();
         console.log(parsedData);
         // it means we want to set the data of the state article by parsedData article means we want the parsed articles by the news api app in our articles
@@ -61,6 +65,8 @@ export class News extends Component {
             totalResults: parsedData.totalResults,
             loading: false
         });
+        // we are setting this setProgress by 100 means the Loadingbar will go to the 100%
+        this.props.setProgress(100);
     }
 
     // react lifecycle
@@ -178,10 +184,10 @@ export class News extends Component {
         return (
 
             <div>
-                <div className="border-bottom border-dark my-3">
+                
                     {/* (this.props.category) this will show the category of the news by using capitalizeFirsttLetter function we make the first letter of the title capital */}
                     <h2 className='text-center my-3'>NewsMonkey - Top {this.capitalizeFirsttLetter(this.props.category)} Headlines</h2>
-                </div>
+                
 
                 {/* this syntax means if loading (above line no:15) is true then only the Spinner will be visible at the top to show the spinner while the page will loading new category*/}
                 {this.state.loading && <Sppinner />}

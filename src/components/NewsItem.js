@@ -7,12 +7,15 @@ export class NewsItem extends Component {
         return (
             <div className='my-4'>
                 <div className="card" >
-
-                    {/* search : badge on bootstrap, to show the message at the top-right corner of every news card */}
-                    <span className="position-absolute top-0 translate-middle badge rounded-pill bg-info"
-                        // we've added this style to fix the badge on top-right corner of the news card
-                        style={{ left: '90%', zIndex: '1' }}>{source}
-                    </span>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        position: 'absolute',
+                        right: '0'
+                    }}>
+                        {/* search : badge on bootstrap, to show the message at the top-right corner of every news card */}
+                        <span className="badge rounded-pill bg-info">On:{source}</span>
+                    </div>
 
                     {/* if any news has no image to show then our app will show a default image to the user */}
                     <img src={!imageUrl ? "https://media.istockphoto.com/id/1182477852/photo/breaking-news-world-news-with-map-backgorund.jpg?s=612x612&w=0&k=20&c=SQfmzF39HZJ_AqFGosVGKT9iGOdtS7ddhfj0EUl0Tkc=" : imageUrl} className="card-img-top" alt="..." />
