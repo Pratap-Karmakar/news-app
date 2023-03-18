@@ -23,7 +23,7 @@ const News = (props) => {
 
     const [totalResults, setTotalResults] = useState(0);
 
-    // document.title = `${capitalizeFirsttLetter(props.category)} - NewsMonkey`
+    
 
     // to capitalxize the first letter of a string
     const capitalizeFirsttLetter = (string) => {
@@ -54,30 +54,19 @@ const News = (props) => {
     }
 
     useEffect(() => {
+        document.title = `${capitalizeFirsttLetter(props.category)} - NewsMonkey`
         updateNews()
+        // eslint-disabled-next-line
     }, [])
 
 
-
-    // const handleNextClick = async () => {
-    //     console.log('next')
-    //     setPage(page + 1);
-    //     updateNews();
-    // }
-
-
-    // const handlePreviousClick = async () => {
-    //     console.log("prev")
-    //     setPage(page - 1);
-    //     updateNews();
-    // }
-
     const fetchMoreData = async () => {
+        // page=${page +1} we need to set the page+1 otherwise 1st page of news will come twise in the app
+        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page + 1}&pageSize=${props.pageSize}`
+
         // we need to set the page+1 otherwise 1st page of news will come twise in the app
         setPage(page + 1)
 
-        // page=${page +1} we need to set the page+1 otherwise 1st page of news will come twise in the app
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page + 1}&pageSize=${props.pageSize}`
         // here we are using fetch api, fetch api will take url as an argument and return a promise
         let data = await fetch(url);
         let parsedData = await data.json();
@@ -97,7 +86,7 @@ const News = (props) => {
         <div>
 
             {/* (props.category) this will show the category of the news by using capitalizeFirsttLetter function we make the first letter of the title capital */}
-            <h2 className='text-center my-3'>NewsMonkey - Top {capitalizeFirsttLetter(props.category)} Headlines</h2>
+            <h1 className='text-center' style={{marginTop:"90px"}}>NewsMonkey - Top Headlines on {capitalizeFirsttLetter(props.category)}</h1>
 
             {loading && <Sppinner />}
 
@@ -145,4 +134,3 @@ News.propTypes = {
 }
 
 export default News
-
